@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/singhpri30/Employee-Summary/issues"
   },
-  "homepage": "https://github.com/singhpri30/Employee-Summary#readme"
+  "homepage": "https://github.com/singhpri30/Employee-Summary#readme",
+  "dependencies": {
+    "jest": "^26.0.1"
+  }
 }
