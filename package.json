@@ -1,0 +1,19 @@
+{
+  "name": "employee-summary",
+  "version": "1.0.0",
+  "description": "This CLI app takes in information about employees and generates an HTML webpage that displays summaries for each person.",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/singhpri30/Employee-Summary.git"
+  },
+  "author": "Priyanka Singh",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/singhpri30/Employee-Summary/issues"
+  },
+  "homepage": "https://github.com/singhpri30/Employee-Summary#readme"
+}
