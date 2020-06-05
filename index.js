@@ -16,88 +16,132 @@ const teamMembers = [];
 
 console.log("Please build your team")
 
+const validateName = (name) => {
+    if (name == '' || typeof name === "number") {
+        return 'Please enter name';
+    }
+    return true;
+};
+const validateId = (id) => {
+    if (id == '' || typeof id === "number") {
+        return 'Please enter id';
+    }
+    return true;
+};
+const validateEmail = (email) => {
+    if (email == '') {
+        return 'Please enter email';
+    }
+    return true;
+};
+
+
+
 
 const askQuestions = () => {
     inquirer.prompt([{
         type: "input",
         name: "name",
-        message: "What is your name?"
+        message: "What is your name?",
+        validate: validateName
     },
     {
         type: "number",
         name: "id",
-        message: "What is your ID?"
+        message: "What is your ID?",
+        validate: validateId
     },
     {
         type: "input",
         name: "email",
-        message: "What is your email?"
+        message: "What is your email?",
+        validate: validateEmail
     },
     {
         type: "list",
         name: "role",
-        message: "Which is your Role",
+        message: "What is your Role",
         choices: ["Manager", "Engineer", "Intern"]
     },
     ]).then(({ name, id, email, role }) => {
         // console.log(answers);
+        if (role === "Manager") {
+            inquirer.prompt(
+                {
+                    type: "number",
+                    name: "officeNumber",
+                    message: "What is your office number?"
+                }
+            ).then(({ officeNumber }) => {
+                const manager = new Manager(name, id, email, officeNumber);
+
+                console.log(manager);
+                teamMembers.push(manager);
+                addMoreTeamMembers();
+            })
+        }
         if (role === "Engineer") {
             inquirer.prompt(
                 {
                     type: "input",
                     name: "github",
-                    message: "What is your engineer's GitHub username?"
+                    message: "What is your GitHub username?"
                 }
             ).then(({ github }) => {
-                const test = new Engineer(name, id, email, github);
+                const engineer = new Engineer(name, id, email, github);
 
-                console.log(test);
-
+                console.log(engineer);
+                teamMembers.push(engineer);
+                console.log(teamMembers);
+                addMoreTeamMembers();
             })
         }
         if (role === "Intern") {
-            inquirer.prompt([{
-
-                type: "input",
-                name: "name",
-                message: "What is your intern's name?",
-            },
-            {
-                type: "input",
-                name: "email",
-                message: "What is your intern's email?"
-            },
-            {
-                type: "number",
-                name: "id",
-                message: "What is your intern's id?"
-            },
-
-            {
-                type: "input",
-                name: "school",
-                message: "What is your intern's school name?"
-            }
-            ]).then(({ name, email, id, school }) => {
-                const test = new Intern({ name, email, id, school });
-                console.log(test);
-
+            inquirer.prompt(
+                {
+                    type: "input",
+                    name: "school",
+                    message: "What is your school name?"
+                }
+            ).then(({ school }) => {
+                const intern = new Intern(name, email, id, school);
+                console.log(intern);
+                teamMembers.push(intern);
+                addMoreTeamMembers();
             })
         }
-        if (role === "I don't want to add any more team members") {
-            let htmlContent = render(answers);
-            console.log(htmlContent);
-            writeAnswers(htmlContent);
-        }
+
     })
 
 }
 
 
+
+
+const addMoreTeamMembers = () => {
+    inquirer.prompt({
+        type: "confirm",
+        name: "moreTeamMembers",
+        message: "Would you like to add more team members?",
+    }).then(({ moreTeamMembers }) => {
+        if (moreTeamMembers) {
+            askQuestions();
+        }
+        else {
+            console.log(teamMembers);
+            let employeeInfo = render(teamMembers);
+            writeAnswers(employeeInfo)
+        }
+
+    }).catch(err => {
+        console.log("Error adding other members", err)
+        throw err
+    })
+}
 askQuestions();
 
 function writeAnswers(htmlContent) { //this will write the contents into README file.
-    fs.writeFile("result.html", htmlContent, (err) => {
+    fs.writeFile(outputPath, htmlContent, (err) => {
         if (err) throw err;
         console.log('The file has been saved!');
     });
