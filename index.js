@@ -16,46 +16,43 @@ const teamMembers = [];
 
 console.log("Please build your team")
 
-const validateName = (name) => {
-    if (name == '' || typeof name === "number") {
-        return 'Please enter name';
-    }
-    return true;
-};
-const validateId = (id) => {
-    if (id == '' || typeof id === "number") {
-        return 'Please enter id';
-    }
-    return true;
-};
-const validateEmail = (email) => {
-    if (email == '') {
-        return 'Please enter email';
-    }
-    return true;
-};
-
-
-
 
 const askQuestions = () => {
     inquirer.prompt([{
         type: "input",
         name: "name",
         message: "What is your name?",
-        validate: validateName
+        validate: name => {
+            if (name !== '') {
+                return true;
+            }
+            return "Please enter your name"
+        }
     },
     {
-        type: "number",
+        type: "input",
         name: "id",
         message: "What is your ID?",
-        validate: validateId
+        validate: id => {
+            const pass = id.match(/^[0-9]\d*$/);
+            if (pass) {
+                return true;
+            }
+            return "Enter an valid ID"
+        }
     },
     {
         type: "input",
         name: "email",
         message: "What is your email?",
-        validate: validateEmail
+        validate: email => {
+            const pass = email.match(/\S+@\S+\.\S+/);
+            if (pass) {
+                return true;
+            }
+            return "Enter an valid email address"
+
+        }
     },
     {
         type: "list",
@@ -68,14 +65,21 @@ const askQuestions = () => {
         if (role === "Manager") {
             inquirer.prompt(
                 {
-                    type: "number",
+                    type: "input",
                     name: "officeNumber",
-                    message: "What is your office number?"
+                    message: "What is your office number?",
+                    validate: id => {
+                        const pass = id.match(/^[0-9]\d*$/);
+                        if (pass) {
+                            return true;
+                        }
+                        return "Enter an valid office number"
+                    }
                 }
             ).then(({ officeNumber }) => {
                 const manager = new Manager(name, id, email, officeNumber);
 
-                console.log(manager);
+                //console.log(manager);
                 teamMembers.push(manager);
                 addMoreTeamMembers();
             })
@@ -85,14 +89,20 @@ const askQuestions = () => {
                 {
                     type: "input",
                     name: "github",
-                    message: "What is your GitHub username?"
+                    message: "What is your GitHub username?",
+                    validate: name => {
+                        if (name !== '') {
+                            return true;
+                        }
+                        return "Please enter GitHub username"
+                    }
                 }
             ).then(({ github }) => {
                 const engineer = new Engineer(name, id, email, github);
 
-                console.log(engineer);
+                //console.log(engineer);
                 teamMembers.push(engineer);
-                console.log(teamMembers);
+                //console.log(teamMembers);
                 addMoreTeamMembers();
             })
         }
@@ -101,11 +111,17 @@ const askQuestions = () => {
                 {
                     type: "input",
                     name: "school",
-                    message: "What is your school name?"
+                    message: "What is your school name?",
+                    validate: name => {
+                        if (name !== '') {
+                            return true;
+                        }
+                        return "Please enter your school name"
+                    }
                 }
             ).then(({ school }) => {
                 const intern = new Intern(name, email, id, school);
-                console.log(intern);
+                //console.log(intern);
                 teamMembers.push(intern);
                 addMoreTeamMembers();
             })
@@ -128,7 +144,7 @@ const addMoreTeamMembers = () => {
             askQuestions();
         }
         else {
-            console.log(teamMembers);
+            //console.log(teamMembers);
             let employeeInfo = render(teamMembers);
             writeAnswers(employeeInfo)
         }
