@@ -26,7 +26,7 @@ const askQuestions = () => {
             if (name !== '') {
                 return true;
             }
-            return "Please enter your name"
+            return "Please enter name"
         }
     },
     {
@@ -38,7 +38,7 @@ const askQuestions = () => {
             if (pass) {
                 return true;
             }
-            return "Enter an valid ID"
+            return "Please enter an valid ID"
         }
     },
     {
@@ -50,7 +50,7 @@ const askQuestions = () => {
             if (pass) {
                 return true;
             }
-            return "Enter an valid email address"
+            return "Please enter an valid email address"
 
         }
     },
@@ -61,7 +61,6 @@ const askQuestions = () => {
         choices: ["Manager", "Engineer", "Intern"]
     },
     ]).then(({ name, id, email, role }) => {
-        // console.log(answers);
         if (role === "Manager") {
             inquirer.prompt(
                 {
@@ -73,13 +72,11 @@ const askQuestions = () => {
                         if (pass) {
                             return true;
                         }
-                        return "Enter an valid office number"
+                        return "Please enter an valid office number"
                     }
                 }
             ).then(({ officeNumber }) => {
                 const manager = new Manager(name, id, email, officeNumber);
-
-                //console.log(manager);
                 teamMembers.push(manager);
                 addMoreTeamMembers();
             })
@@ -94,15 +91,12 @@ const askQuestions = () => {
                         if (name !== '') {
                             return true;
                         }
-                        return "Please enter GitHub username"
+                        return "Please enter engineer's GitHub username"
                     }
                 }
             ).then(({ github }) => {
                 const engineer = new Engineer(name, id, email, github);
-
-                //console.log(engineer);
                 teamMembers.push(engineer);
-                //console.log(teamMembers);
                 addMoreTeamMembers();
             })
         }
@@ -116,12 +110,11 @@ const askQuestions = () => {
                         if (name !== '') {
                             return true;
                         }
-                        return "Please enter your school name"
+                        return "Please enter intern's school name"
                     }
                 }
             ).then(({ school }) => {
                 const intern = new Intern(name, email, id, school);
-                //console.log(intern);
                 teamMembers.push(intern);
                 addMoreTeamMembers();
             })
@@ -130,8 +123,6 @@ const askQuestions = () => {
     })
 
 }
-
-
 
 
 const addMoreTeamMembers = () => {
@@ -144,7 +135,6 @@ const addMoreTeamMembers = () => {
             askQuestions();
         }
         else {
-            //console.log(teamMembers);
             let employeeInfo = render(teamMembers);
             writeAnswers(employeeInfo)
         }
@@ -156,7 +146,7 @@ const addMoreTeamMembers = () => {
 }
 askQuestions();
 
-function writeAnswers(htmlContent) { //this will write the contents into README file.
+function writeAnswers(htmlContent) { //this will write the contents team.html file
     fs.writeFile(outputPath, htmlContent, (err) => {
         if (err) throw err;
         console.log('The file has been saved!');
