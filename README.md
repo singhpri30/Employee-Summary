@@ -23,9 +23,11 @@ Objective:  One of the most important aspects of programming is writing code tha
 
 ### To run tests :
 npm run test
+![test](https://user-images.githubusercontent.com/60719350/83983496-ed056480-a8fc-11ea-9217-c0b74510eb2b.gif)
 
 ### To run Application :
-node index.js
+node index
+![index](https://user-images.githubusercontent.com/60719350/83983444-7f593880-a8fc-11ea-8a6a-e216cb1a8398.gif)
 
 ## Developer ##
 
@@ -37,3 +39,7 @@ node index.js
 *https://github.com/singhpri30/Employee-Summary*
 
 *https://singhpri30.github.io/Employee-Summary/output/team.html*
+
+
+
+
