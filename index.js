@@ -38,7 +38,7 @@ const askQuestions = () => {
             if (pass) {
                 return true;
             }
-            return "Please enter an valid ID"
+            return "Please enter a valid ID"
         }
     },
     {
@@ -50,7 +50,7 @@ const askQuestions = () => {
             if (pass) {
                 return true;
             }
-            return "Please enter an valid email address"
+            return "Please enter a valid email address"
 
         }
     },
@@ -72,7 +72,7 @@ const askQuestions = () => {
                         if (pass) {
                             return true;
                         }
-                        return "Please enter an valid office number"
+                        return "Please enter a valid office number"
                     }
                 }
             ).then(({ officeNumber }) => {
